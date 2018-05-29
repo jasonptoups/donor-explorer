@@ -1,0 +1,30 @@
+.image-search {
+  background: linear-gradient(
+                     rgba(72,72,72, .7), 
+                     rgba(72,72,72, .7)),
+                     url("images/jomar-271602-unsplash-edited.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+  overflow-y: hidden;
+  height: calc(100vh - 135px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-form-inputs {
+  display: flex;
+  flex-direction: row;
+}
+
+.search-form-inputs div label {
+  display: block;
+  color: white;
+}

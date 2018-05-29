@@ -1,0 +1,63 @@
+header {
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+header div {
+  background-color: #1B7F4C;
+  text-align: left;
+  padding: 10px;
+}
+
+header nav {
+  display: grid;
+  grid-template-columns: 150px 150px 150px 1fr 150px 150px;
+  height: 40px;
+  background: #7EA6BF;
+  padding: 0 10px;
+  text-align: center;
+}
+
+.home {
+  grid-column: 1;
+  line-height: 40px;
+  padding: 0;
+}
+
+.search {
+  grid-column: 2;
+  line-height: 40px;
+  padding: 0;
+}
+
+.donors {
+  grid-column: 3;
+  line-height: 40px;
+  padding: 0;
+}
+
+.register {
+  grid-column: 5;
+  line-height: 40px;
+  padding: 0;
+}
+
+.login {
+  grid-column: 6;
+  line-height: 40px;
+  padding: 0;
+}
+
+.logout {
+  grid-column: 6;
+  line-height: 40px;
+  padding: 0;
+}
+
+.is-active {
+  background: #4E7F9C
+}
