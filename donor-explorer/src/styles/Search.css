@@ -8,7 +8,7 @@
   width: 100%;
   background-size: cover;
   overflow-y: hidden;
-  height: calc(100vh - 135px);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
