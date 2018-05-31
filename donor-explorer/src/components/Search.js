@@ -7,7 +7,6 @@ import _ from 'lodash'
 
 import '../styles/Search.css'
 import {API_KEY, STANDARD_SETTINGS, FEC_API} from '../constants/constants'
-import {EXAMPLE} from '../constants/sampleData'
 
 class Search extends Component {
   constructor (props) {
@@ -67,12 +66,12 @@ class Search extends Component {
 
   maxDonation (data) {
     let donations = data.map(row => row.contribution_receipt_amount)
-    return Math.max(...donations)
+    return Math.round(Math.max(...donations))
   }
 
   meanDonation (data) {
     let donations = data.map(row => row.contribution_receipt_amount)
-    return _.mean(donations)
+    return Math.round(_.mean(donations))
   }
 
   modeDonation (data) {
@@ -81,17 +80,18 @@ class Search extends Component {
       .countBy()
       .entries()
       .maxBy('[1]'))
-    return parseInt(modeDonation)
+    return parseInt(Math.round(modeDonation))
   }
 
   percentDem (data) {
     let allDonations = data.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
     let demDonations = data.filter(row => row.committee.party === 'DEM').map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
-    return demDonations / allDonations * 100 + '%'
+    return Math.round(demDonations / allDonations * 100) + '%'
   }
 
   saveDonor (event) {
     event.preventDefault()
+    console.log(this.props.userId)
     Axios.post('http://donor-explorer.herokuapp.com/api/donors/saved-donors', {
       first_name: this.state.firstName,
       last_name: this.state.lastName,
@@ -102,17 +102,17 @@ class Search extends Component {
       average_donation: this.state.meanDonation,
       max_donation: this.state.maxDonation,
       mode_donation: this.state.modeDonation,
-      percent_dem: this.state.percentDem,
       total_donations: this.state.totalDonations,
-      user: 1
+      percent_dem: this.state.percentDem,
+      user: this.props.userId
     })
       .then(res => {
         console.log(res)
       })
+      .catch(error => console.log(error))
   }
 
   render () {
-    // console.log(store.getState())
     const data = this.state.filteredData
     const columns = [{
       Header: 'First Name',

@@ -1,8 +1,6 @@
 import React, {Component} from 'react'
-import Axios from 'axios'
 
 import {Container, Row, Input, Button} from 'react-materialize'
-import {CLIENT_URL} from '../constants/constants'
 
 export default class LoginForm extends Component {
   constructor (props) {
@@ -26,7 +24,6 @@ export default class LoginForm extends Component {
 
   submit (event) {
     event.preventDefault()
-    console.log('submit')
     this.props.logIn(this.state.username, this.state.password)
   }
 

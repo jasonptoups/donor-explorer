@@ -11,10 +11,11 @@ import jwtDecode from 'jwt-decode'
 import Register from './Register'
 import HomePage from './HomePage'
 import Search from './Search'
-import Login from '../containers/Login'
-import PrivateRoute from '../containers/PrivateRoute'
-import SavedDonors from './SavedDonors'
 import Header from './Header'
+
+import LoginContainer from '../containers/LoginContainer'
+import SavedDonorsContainer from '../containers/SavedDonorsContainer'
+import LogOutContainer from '../containers/LogOutContainer'
 
 import {CLIENT_URL} from '../constants/constants'
 
@@ -24,13 +25,12 @@ class App extends Component {
     this.state = {
       accessToken: null,
       refreshToken: null,
-      accessExp: null,
-      userId: null,
-      errors: {},
-      isAuthenticated: false
+      userId: 2,
+      isAuthenticated: true
     }
     this.logIn = this.logIn.bind(this)
     this.isAuthenticated = this.isAuthenticated.bind(this)
+    this.logOut = this.logOut.bind(this)
   }
 
   logIn (username, password) {
@@ -42,19 +42,27 @@ class App extends Component {
         password: password
       }
     }).then(res => {
-      console.log('success')
-      console.log(res)
       this.setState({
         accessToken: res.data.access,
         refreshToken: res.data.refresh,
-        accessExp: jwtDecode(res.data.access).exp,
         userId: jwtDecode(res.data.access).user_id
       })
     })
   }
 
+  logOut () {
+    this.setState({
+      accessToken: null,
+      refreshToken: null,
+      userId: null,
+      isAuthenticated: false
+    })
+  }
+
   isAuthenticated () {
-    if (1000 * this.state.accessExp - new Date().getTime() >= 0) {
+    if (this.state.isAuthenticated === true) return true
+    if (this.state.accessToken === null) return false
+    if (1000 * jwtDecode(this.state.accessToken).exp - new Date().getTime() >= 0) {
       return true
     } else {
       return false
@@ -81,7 +89,7 @@ class App extends Component {
                 path='/login'
                 exact
                 render={props => (
-                  <Login
+                  <LoginContainer
                     {...props}
                     isAuthenticated={this.isAuthenticated}
                     logIn={this.logIn} />
@@ -95,6 +103,7 @@ class App extends Component {
                     <Search
                       {...props}
                       isAuthenticated={this.isAuthenticated}
+                      userId={this.state.userId}
                     />
                   )
                 }}
@@ -106,7 +115,25 @@ class App extends Component {
                   <Register {...props} isAuthenticated={this.isAuthenticated} />
                 )}
               />
-              <PrivateRoute exact path='/saveddonors' component={SavedDonors} isAuthenticated={this.isAuthenticated()} />
+              <Route
+                path='/saveddonors'
+                exact
+                render={props => (
+                  <SavedDonorsContainer
+                    {...props}
+                    isAuthenticated={this.isAuthenticated}
+                    userId={this.state.userId} />
+                )}
+              />
+              <Route
+                path='/logout'
+                exact
+                render={props => (
+                  <LogOutContainer
+                    {...props}
+                    logOut={this.logOut} />
+                )}
+              />
               <Route path='/*' render={() => <Redirect to='/' />} />
             </Switch>
           </div>

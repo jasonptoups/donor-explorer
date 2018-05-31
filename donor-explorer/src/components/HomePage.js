@@ -3,7 +3,6 @@ import '../styles/HomePage.css'
 
 class HomePage extends Component {
   render () {
-    // console.log(this.props.isAuthenticated())
     return (
       <div>
         <div className='image-home'>

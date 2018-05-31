@@ -6,7 +6,7 @@ import LoginForm from '../components/LoginForm'
 // import {login} from '../actions/auth'
 // import {authErrors, isAuthenticated} from '../reducers/index'
 
-const Login = (props) => {
+const LoginContainer = (props) => {
   if (props.isAuthenticated()) {
     return (
       <Redirect to='/' />
@@ -33,4 +33,4 @@ const Login = (props) => {
 
 // export default connect(mapStateToProps, mapDispatchToProps)(Login)
 
-export default Login
+export default LoginContainer

@@ -5,12 +5,6 @@ import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import {CLIENT_URL} from '../constants/constants'
 
-import configureStore from '../store'
-import createHistory from 'history/createBrowserHistory'
-
-const history = createHistory()
-const store = configureStore(history)
-
 class SavedDonors extends Component {
   constructor (props) {
     super(props)
@@ -21,7 +15,7 @@ class SavedDonors extends Component {
   }
 
   updatePage () {
-    let userId = store.getState().auth.access.user_id
+    let userId = this.props.userId
     Axios.get(`${CLIENT_URL}api/donors/saved-donors`)
       .then(res => {
         let savedDonors = res.data.filter(row => row.user === userId)
