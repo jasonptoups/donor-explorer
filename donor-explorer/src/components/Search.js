@@ -5,16 +5,9 @@ import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import _ from 'lodash'
 
-import Header from './Header'
 import '../styles/Search.css'
 import {API_KEY, STANDARD_SETTINGS, FEC_API} from '../constants/constants'
 import {EXAMPLE} from '../constants/sampleData'
-
-import configureStore from '../store'
-import createHistory from 'history/createBrowserHistory'
-
-const history = createHistory()
-const store = configureStore(history)
 
 class Search extends Component {
   constructor (props) {
@@ -23,7 +16,7 @@ class Search extends Component {
       firstName: '',
       lastName: '',
       city: '',
-      rawData: EXAMPLE,
+      filteredData: [],
       candidatesOnly: true,
       maxDonation: null,
       meanDonation: null,
@@ -46,30 +39,30 @@ class Search extends Component {
 
   search (event) {
     event.preventDefault()
-    // let get2018 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2018&api_key=${API_KEY}`)
-    // let get2016 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2016&api_key=${API_KEY}`)
-    // get2018()
-    //   .then(response2018 => {
-    //     get2016()
-    //       .then(response2016 => {
-    //         let rawData = response2018.data.results.concat(response2016.data.results)
-    let filteredData = this.state.rawData.filter(row => row.committee.designation === 'P')
-    let maxDonation = this.maxDonation(filteredData)
-    let meanDonation = this.meanDonation(filteredData)
-    let modeDonation = this.modeDonation(filteredData)
-    let percentDem = this.percentDem(filteredData)
-    let totalDonations = filteredData.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
-    this.setState({
-      filteredData,
-      maxDonation,
-      meanDonation,
-      modeDonation,
-      percentDem,
-      totalDonations
-    })
-    console.log(this.state)
-    //     })
-    // })
+    let get2018 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2018&api_key=${API_KEY}`)
+    let get2016 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2016&api_key=${API_KEY}`)
+    get2018()
+      .then(response2018 => {
+        get2016()
+          .then(response2016 => {
+            let rawData = response2018.data.results.concat(response2016.data.results)
+            let filteredData = rawData.filter(row => row.committee.designation === 'P')
+            let maxDonation = this.maxDonation(filteredData)
+            let meanDonation = this.meanDonation(filteredData)
+            let modeDonation = this.modeDonation(filteredData)
+            let percentDem = this.percentDem(filteredData)
+            let totalDonations = filteredData.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
+            this.setState({
+              filteredData,
+              maxDonation,
+              meanDonation,
+              modeDonation,
+              percentDem,
+              totalDonations
+            })
+            console.log(this.state)
+          })
+      })
   }
 
   maxDonation (data) {
@@ -103,15 +96,15 @@ class Search extends Component {
       first_name: this.state.firstName,
       last_name: this.state.lastName,
       city: this.state.city,
-      state: this.state.rawData[0].contributor_state,
-      employer: this.state.rawData[0].contributor_employer,
-      occupation: this.state.rawData[0].contributor_occupation,
+      state: this.state.filteredData[0].contributor_state,
+      employer: this.state.filteredData[0].contributor_employer,
+      occupation: this.state.filteredData[0].contributor_occupation,
       average_donation: this.state.meanDonation,
       max_donation: this.state.maxDonation,
       mode_donation: this.state.modeDonation,
       percent_dem: this.state.percentDem,
       total_donations: this.state.totalDonations,
-      user: store.getState().auth.access.user_id
+      user: 1
     })
       .then(res => {
         console.log(res)
@@ -119,7 +112,7 @@ class Search extends Component {
   }
 
   render () {
-    console.log(store.getState())
+    // console.log(store.getState())
     const data = this.state.filteredData
     const columns = [{
       Header: 'First Name',
@@ -185,7 +178,6 @@ class Search extends Component {
 
     return (
       <div>
-        <Header />
         <div className='search-image'>
           <Container>
             <Row>

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import Header from './Header'
 import Axios from 'axios'
 
 import {Container, Row, Input, Button} from 'react-materialize'
@@ -42,7 +41,6 @@ class Register extends Component {
   render () {
     return (
       <div>
-        <Header />
         <div className='register-image'>
           <Container>
             <h2>Register</h2>

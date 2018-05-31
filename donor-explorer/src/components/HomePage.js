@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
-import Header from './Header'
 import '../styles/HomePage.css'
 
 class HomePage extends Component {
   render () {
+    // console.log(this.props.isAuthenticated())
     return (
       <div>
-        <Header />
         <div className='image-home'>
           <div className='textbox'>
             <h2>

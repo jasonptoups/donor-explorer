@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import {Container, Button} from 'react-materialize'
+import {Container} from 'react-materialize'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import {CLIENT_URL} from '../constants/constants'
-
-import Header from './Header'
 
 import configureStore from '../store'
 import createHistory from 'history/createBrowserHistory'
@@ -72,7 +70,6 @@ class SavedDonors extends Component {
     }]
     return (
       <div>
-        <Header />
         <div className='search-image'>
           <Container>
             <ReactTable

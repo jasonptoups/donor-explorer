@@ -1,51 +1,51 @@
 import React, {Component} from 'react'
-import { Alert, Button, Jumbotron, Form } from 'reactstrap'
-import TextInput from './TextInput'
+import Axios from 'axios'
+
+import {Container, Row, Input, Button} from 'react-materialize'
+import {CLIENT_URL} from '../constants/constants'
 
 export default class LoginForm extends Component {
-  state = {
-    username: '',
-    password: ''
+  constructor (props) {
+    super(props)
+    this.state = {
+      username: '',
+      password: ''
+    }
+    this.onChange = this.onChange.bind(this)
+    this.submit = this.submit.bind(this)
   }
-  
-  handleInputChange = (event) => {
-    const target = event.target,
-          value = target.type === 
-            'checkbox' ? target.checked : target.value,
-          name = target.name
+
+  onChange (event) {
+    const target = event.target
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    const name = target.name
     this.setState({
       [name]: value
     })
   }
 
-  onSubmit = (event) => {
+  submit (event) {
     event.preventDefault()
-    this.props.onSubmit(this.state.username, this.state.password)
+    console.log('submit')
+    this.props.logIn(this.state.username, this.state.password)
   }
 
-  render() {
-    const errors = this.props.errors || {}
+  render () {
     return (
-      <Jumbotron className="container">
-        <Form onSubmit={this.onSubmit}>
-          <h1>Authentication</h1>
-          {
-           errors.non_field_errors?
-             <Alert color="danger">
-                {errors.non_field_errors}
-             </Alert>:""
-          }
-          <TextInput name="username" label="Username" 
-                     error={errors.username}
-                     onChange={this.handleInputChange} />
-          <TextInput name="password" label="Password" 
-                     error={errors.password} type="password"  
-                     onChange={this.handleInputChange}/>
-          <Button type="submit" color="primary" size="lg" >
-              Log In
-          </Button>
-        </Form>
-      </Jumbotron>
+      <div>
+        <div className='register-image'>
+          <Container>
+            <h2>Sign In</h2>
+            <Row>
+              <Row>
+                <Input s={12} type='email' label='Email' name='username' onChange={this.onChange} id='email' />
+                <Input s={12} type='password' label='Password' name='password' onChange={this.onChange} />
+                <Button onClick={this.submit} waves='teal'>Sign In</Button>
+              </Row>
+            </Row>
+          </Container>
+        </div>
+      </div>
     )
   }
 }

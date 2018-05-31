@@ -1,12 +1,12 @@
 import React from 'react'
-import {connect} from 'react-redux'
-import {Redirect} from 'react-router'
+// import {connect} from 'react-redux'
+import {Redirect} from 'react-router-dom'
 
-import {logOut} from '../actions/auth'
-import {authErrors, isAuthenticated} from '../reducers/index'
+// import {logOut} from '../actions/auth'
+// import {authErrors, isAuthenticated} from '../reducers/index'
 
 const LogOut = (props) => {
-  if (!props.isAuthenticated) {
+  if (!props.isAuthenticated()) {
     return (
       <Redirect to='/' />
     )
@@ -17,15 +17,17 @@ const LogOut = (props) => {
   }
 }
 
-const mapStateToProps = (state) => ({
-  errors: authErrors(state),
-  isAuthenticated: isAuthenticated(state)
-})
+// const mapStateToProps = (state) => ({
+//   errors: authErrors(state),
+//   isAuthenticated: isAuthenticated(state)
+// })
 
-const mapDispatchToProps = (dispatch) => ({
-  logOut: () => {
-    dispatch(logOut())
-  }
-})
+// const mapDispatchToProps = (dispatch) => ({
+//   logOut: () => {
+//     dispatch(logOut())
+//   }
+// })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LogOut)
+// export default connect(mapStateToProps, mapDispatchToProps)(LogOut)
+
+export default LogOut
