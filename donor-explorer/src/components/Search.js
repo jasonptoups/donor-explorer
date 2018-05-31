@@ -8,6 +8,13 @@ import _ from 'lodash'
 import Header from './Header'
 import '../styles/Search.css'
 import {API_KEY, STANDARD_SETTINGS, FEC_API} from '../constants/constants'
+import {EXAMPLE} from '../constants/sampleData'
+
+import configureStore from '../store'
+import createHistory from 'history/createBrowserHistory'
+
+const history = createHistory()
+const store = configureStore(history)
 
 class Search extends Component {
   constructor (props) {
@@ -16,7 +23,7 @@ class Search extends Component {
       firstName: '',
       lastName: '',
       city: '',
-      rawData: [],
+      rawData: EXAMPLE,
       candidatesOnly: true,
       maxDonation: null,
       meanDonation: null,
@@ -25,7 +32,7 @@ class Search extends Component {
     }
     this.onChange = this.onChange.bind(this)
     this.search = this.search.bind(this)
-    this.maxDonation = this.maxDonation.bind(this)
+    this.saveDonor = this.saveDonor.bind(this)
   }
 
   onChange (event) {
@@ -39,40 +46,40 @@ class Search extends Component {
 
   search (event) {
     event.preventDefault()
-    let get2018 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2018&api_key=${API_KEY}`)
-    let get2016 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2016&api_key=${API_KEY}`)
-    get2018()
-      .then(response2018 => {
-        get2016()
-          .then(response2016 => {
-            let rawData = response2018.data.results.concat(response2016.data.results)
-            let filteredData = rawData.filter(row => row.committee.designation === 'P')
-            let maxDonation = this.maxDonation(filteredData)
-            let meanDonation = this.meanDonation(filteredData)
-            let modeDonation = this.modeDonation(filteredData)
-            let percentDem = this.percentDem(filteredData)
-            this.setState({
-              filteredData,
-              maxDonation,
-              meanDonation,
-              modeDonation,
-              percentDem
-            })
-            console.log(this.state)
-          })
-      })
+    // let get2018 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2018&api_key=${API_KEY}`)
+    // let get2016 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2016&api_key=${API_KEY}`)
+    // get2018()
+    //   .then(response2018 => {
+    //     get2016()
+    //       .then(response2016 => {
+    //         let rawData = response2018.data.results.concat(response2016.data.results)
+    let filteredData = this.state.rawData.filter(row => row.committee.designation === 'P')
+    let maxDonation = this.maxDonation(filteredData)
+    let meanDonation = this.meanDonation(filteredData)
+    let modeDonation = this.modeDonation(filteredData)
+    let percentDem = this.percentDem(filteredData)
+    let totalDonations = filteredData.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
+    this.setState({
+      filteredData,
+      maxDonation,
+      meanDonation,
+      modeDonation,
+      percentDem,
+      totalDonations
+    })
+    console.log(this.state)
+    //     })
+    // })
   }
 
   maxDonation (data) {
     let donations = data.map(row => row.contribution_receipt_amount)
-    let maxDonation = Math.max(...donations)
-    return maxDonation
+    return Math.max(...donations)
   }
 
   meanDonation (data) {
     let donations = data.map(row => row.contribution_receipt_amount)
-    let meanDonation = _.mean(donations)
-    return meanDonation
+    return _.mean(donations)
   }
 
   modeDonation (data) {
@@ -87,11 +94,32 @@ class Search extends Component {
   percentDem (data) {
     let allDonations = data.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
     let demDonations = data.filter(row => row.committee.party === 'DEM').map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
-    let percentDem = demDonations / allDonations * 100
-    return percentDem + '%'
+    return demDonations / allDonations * 100 + '%'
+  }
+
+  saveDonor (event) {
+    event.preventDefault()
+    Axios.post('http://donor-explorer.herokuapp.com/api/donors/saved-donors', {
+      first_name: this.state.firstName,
+      last_name: this.state.lastName,
+      city: this.state.city,
+      state: this.state.rawData[0].contributor_state,
+      employer: this.state.rawData[0].contributor_employer,
+      occupation: this.state.rawData[0].contributor_occupation,
+      average_donation: this.state.meanDonation,
+      max_donation: this.state.maxDonation,
+      mode_donation: this.state.modeDonation,
+      percent_dem: this.state.percentDem,
+      total_donations: this.state.totalDonations,
+      user: store.getState().auth.access.user_id
+    })
+      .then(res => {
+        console.log(res)
+      })
   }
 
   render () {
+    console.log(store.getState())
     const data = this.state.filteredData
     const columns = [{
       Header: 'First Name',
@@ -116,7 +144,7 @@ class Search extends Component {
     }]
     const tableStyle = {
       background: 'rgba(216, 216, 216, 0.8)',
-      margin: '0 0 100px 0'
+      margin: '0 0 20px 0'
     }
 
     const summaryData = [{
@@ -126,7 +154,8 @@ class Search extends Component {
       maxDonation: this.state.maxDonation,
       meanDonation: this.state.meanDonation,
       modeDonation: this.state.modeDonation,
-      percentDem: this.state.percentDem
+      percentDem: this.state.percentDem,
+      totalDonations: this.state.totalDonations
     }]
     const summaryColumns = [{
       Header: 'First Name',
@@ -149,12 +178,15 @@ class Search extends Component {
     }, {
       Header: 'Percent Dem',
       accessor: 'percentDem'
+    }, {
+      Header: 'Total',
+      accessor: 'totalDonations'
     }]
 
     return (
       <div>
         <Header />
-        <div className='image-search'>
+        <div className='search-image'>
           <Container>
             <Row>
               <form onSubmit={this.search}>
@@ -183,6 +215,7 @@ class Search extends Component {
               showPageSizeOptions={false}
               showPagination={false}
             />
+            <Button waves='teal' onClick={this.saveDonor}>Save Donor</Button>
           </Container>
         </div>
       </div>

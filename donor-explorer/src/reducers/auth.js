@@ -68,7 +68,7 @@ export function isRefreshTokenExpired (state) {
 }
 
 export function isAuthenticated (state) {
-  return !isRefreshTokenExpired(state)
+  return !isAccessTokenExpired(state)
 }
 
 export function authErrors (state) {

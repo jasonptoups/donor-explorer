@@ -7,8 +7,10 @@ import {Route, Switch} from 'react-router'
 
 import Login from './containers/Login'
 import PrivateRoute from './containers/PrivateRoute'
+import SavedDonors from './components/SavedDonors'
 
 import './styles/index.css'
+import Register from './components/Register'
 // import App from './components/App'
 import HomePage from './components/HomePage'
 import Search from './components/Search'
@@ -25,8 +27,8 @@ ReactDOM.render((
         <Route exact path='/' component={HomePage} />
         <Route exact path='/login/' component={Login} />
         <Route exact path='/search/' component={Search} />
-        {/* <Route exact path='/register/' component={Register} /> */}
-        {/* <PrivateRoute path='/' component={App} /> */}
+        <Route exact path='/register/' component={Register} />
+        <PrivateRoute path='/saveddonors' component={SavedDonors} />
       </Switch>
     </ConnectedRouter>
   </Provider>

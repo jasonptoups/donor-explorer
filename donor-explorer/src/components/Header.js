@@ -4,6 +4,12 @@ import '../styles/Header.css'
 import * as reducers from '../reducers/index'
 import {connect} from 'react-redux'
 
+import configureStore from '../store'
+import createHistory from 'history/createBrowserHistory'
+
+const history = createHistory()
+const store = configureStore(history)
+
 class Header extends Component {
   render (props) {
     return (
@@ -25,7 +31,9 @@ class Header extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: reducers.isAuthenticated(state)
+  isAuthenticated: reducers.isAuthenticated(state),
+  accessToken: reducers.accessToken(state),
+  isAccessTokenExpired: reducers.isAccessTokenExpired(state)
 })
 
 export default connect(mapStateToProps, null)(Header)

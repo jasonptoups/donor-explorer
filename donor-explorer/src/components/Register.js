@@ -1,33 +1,42 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Header from './Header'
 import Axios from 'axios'
 
 import {Container, Row, Input, Button} from 'react-materialize'
 import {CLIENT_URL} from '../constants/constants'
 
-export default class LoginForm extends Component {
-  constructor (props) {
-    super(props)
+class Register extends Component {
+  constructor () {
+    super()
     this.state = {
       username: '',
       password: ''
     }
-    this.handleInputChange = this.handleInputChange.bind(this)
-    this.onSubmit = this.onSubmit.bind(this)
+    this.onChange = this.onChange.bind(this)
+    this.submit = this.submit.bind(this)
   }
 
-  handleInputChange (event) {
+  submit (event) {
+    event.preventDefault()
+    Axios({
+      method: 'post',
+      url: `${CLIENT_URL}api/donors/users/register`,
+      data: {
+        username: this.state.username,
+        password: this.state.password
+      }
+    }).then(res => {
+      console.log(res)
+    })
+  }
+
+  onChange (event) {
     const target = event.target
-    const value = target.type === 'checkbox' ? target.checked : target.value
+    const value = target.value
     const name = target.name
     this.setState({
       [name]: value
     })
-  }
-
-  onSubmit (event) {
-    event.preventDefault()
-    this.props.onSubmit(this.state.username, this.state.password)
   }
 
   render () {
@@ -36,7 +45,7 @@ export default class LoginForm extends Component {
         <Header />
         <div className='register-image'>
           <Container>
-            <h2>Log In</h2>
+            <h2>Register</h2>
             <Row>
               <form onSubmit={this.submit}>
                 <Row>
@@ -52,3 +61,5 @@ export default class LoginForm extends Component {
     )
   }
 }
+
+export default Register

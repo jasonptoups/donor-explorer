@@ -1,9 +1,11 @@
 import { combineReducers } from 'redux'
 import { routerReducer } from 'react-router-redux'
 import auth, * as fromAuth from './auth.js'
+import logOutReducer from './logOut.js'
 
 export default combineReducers({
   auth: auth,
+  logOutReducer: logOutReducer,
   router: routerReducer
 })
 
