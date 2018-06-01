@@ -8,17 +8,29 @@
   width: 100%;
   background-size: cover;
   overflow-y: hidden;
-  height: calc(100vh - 135px);
+  height: calc(100vh - 160px);
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .textbox {
-  height: 400px;
+  height: 500px;
   width: 60%;
   justify-content: center;
-  background: rgba(216,216,216, .6);
+  background: rgba(210, 215, 217, .6);
   position: relative;
   text-align: center;
+}
+
+.textbox ol {
+  text-align: left;
+}
+
+.instruction-header {
+  color: #0D3E5B;
+}
+
+.textbox p a {
+  color: #0D3E5B;
 }

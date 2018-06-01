@@ -25,8 +25,8 @@ class App extends Component {
     this.state = {
       accessToken: null,
       refreshToken: null,
-      userId: 2,
-      isAuthenticated: true
+      userId: null,
+      // isAuthenticated: true
     }
     this.logIn = this.logIn.bind(this)
     this.isAuthenticated = this.isAuthenticated.bind(this)
@@ -47,6 +47,8 @@ class App extends Component {
         refreshToken: res.data.refresh,
         userId: jwtDecode(res.data.access).user_id
       })
+      sessionStorage.setItem('accessToken', res.data.access)
+      sessionStorage.setItem('refreshToken', res.data.refresh)
     })
   }
 
@@ -55,17 +57,32 @@ class App extends Component {
       accessToken: null,
       refreshToken: null,
       userId: null,
-      isAuthenticated: false
+      // isAuthenticated: false
     })
   }
 
   isAuthenticated () {
-    if (this.state.isAuthenticated === true) return true
+    // if (this.state.isAuthenticated === true) return true
     if (this.state.accessToken === null) return false
     if (1000 * jwtDecode(this.state.accessToken).exp - new Date().getTime() >= 0) {
       return true
     } else {
       return false
+    }
+  }
+
+  componentDidMount () {
+    let accessToken = sessionStorage.getItem('accessToken')
+    let refreshToken = sessionStorage.getItem('refreshToken')
+    if (!accessToken || accessToken === '') {
+      accessToken = null
+      refreshToken = null
+    } else {
+      this.setState({
+        accessToken: accessToken,
+        refreshToken: refreshToken,
+        userId: jwtDecode(accessToken).user_id
+      })
     }
   }
 

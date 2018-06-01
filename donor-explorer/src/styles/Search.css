@@ -28,3 +28,48 @@
   display: block;
   color: white;
 }
+
+.center-button {
+  display: block;
+  margin: 0 auto;
+  color: black;
+  background-color: #51AC7E
+}
+
+.center-button:hover {
+  background-color: #81CAA5
+}
+
+.search-form {
+  margin: 10px 50px 15px 50px;
+  padding: 10px 0;
+}
+
+.search-container {
+  background: rgba(210, 215, 217, 0.5);
+  padding: 10px;
+  margin: 20px 0;
+}
+
+.input-field label {
+  color: black;
+}
+
+.input-field underline {
+  border-bottom: 1px solid #000
+}
+
+.input-field input[type=text]:focus + label {
+  color: #1E5373;
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #1E5373;
+  box-shadow: 0 1px 0 0 #000;
+}
+
+.input-field input[type=text] {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}
+

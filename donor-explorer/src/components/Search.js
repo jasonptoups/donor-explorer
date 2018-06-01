@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import {Container, Row, Input, Button} from 'react-materialize'
+import {Container, Row, Input, Button, Modal, Col, Preloader} from 'react-materialize'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import _ from 'lodash'
@@ -50,14 +50,16 @@ class Search extends Component {
             let meanDonation = this.meanDonation(filteredData)
             let modeDonation = this.modeDonation(filteredData)
             let percentDem = this.percentDem(filteredData)
-            let totalDonations = filteredData.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
+            let totalDonations = this.totalDonations(filteredData)
+            let committeeList = this.listCommittees(filteredData)
             this.setState({
               filteredData,
               maxDonation,
               meanDonation,
               modeDonation,
               percentDem,
-              totalDonations
+              totalDonations,
+              committeeList
             })
             console.log(this.state)
           })
@@ -65,16 +67,19 @@ class Search extends Component {
   }
 
   maxDonation (data) {
+    if (data.length === 0) return 0
     let donations = data.map(row => row.contribution_receipt_amount)
     return Math.round(Math.max(...donations))
   }
 
   meanDonation (data) {
+    if (data.length === 0) return 0
     let donations = data.map(row => row.contribution_receipt_amount)
     return Math.round(_.mean(donations))
   }
 
   modeDonation (data) {
+    if (data.length === 0) return 0
     let donations = data.map(row => row.contribution_receipt_amount)
     let modeDonation = _.head(_(donations)
       .countBy()
@@ -83,7 +88,18 @@ class Search extends Component {
     return parseInt(Math.round(modeDonation))
   }
 
+  totalDonations (data) {
+    if (data.length === 0) return 0
+    return data.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
+  }
+
+  listCommittees (data) {
+    if (data.length === 0) return 0
+    return data.map(row => row.committee.name).join(', ')
+  }
+
   percentDem (data) {
+    if (data.length === 0) return 0
     let allDonations = data.map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
     let demDonations = data.filter(row => row.committee.party === 'DEM').map(row => row.contribution_receipt_amount).reduce((accumulator, current) => accumulator + current)
     return Math.round(demDonations / allDonations * 100) + '%'
@@ -104,6 +120,7 @@ class Search extends Component {
       mode_donation: this.state.modeDonation,
       total_donations: this.state.totalDonations,
       percent_dem: this.state.percentDem,
+      commitees: this.state.committeeList,
       user: this.props.userId
     })
       .then(res => {
@@ -148,7 +165,8 @@ class Search extends Component {
       meanDonation: this.state.meanDonation,
       modeDonation: this.state.modeDonation,
       percentDem: this.state.percentDem,
-      totalDonations: this.state.totalDonations
+      totalDonations: this.state.totalDonations,
+      committees: this.state.committeeList
     }]
     const summaryColumns = [{
       Header: 'First Name',
@@ -174,40 +192,54 @@ class Search extends Component {
     }, {
       Header: 'Total',
       accessor: 'totalDonations'
+    }, {
+      Header: 'Committees',
+      accessor: 'committees',
+      minWidth: 150
     }]
+
+    const modalStyle = {
+      padding: 0
+    }
 
     return (
       <div>
         <div className='search-image'>
           <Container>
-            <Row>
-              <form onSubmit={this.search}>
-                <Row>
+            <div className='search-container'>
+              <Row className='search-form'>
+                <form onSubmit={this.search}>
                   <Input s={4} label='First Name*' name='firstName' onChange={this.onChange} />
                   <Input s={4} label='Last Name*' name='lastName' onChange={this.onChange} />
                   <Input s={4} label='City*' name='city' onChange={this.onChange} />
-                  <Button type='submit' waves='teal'>Search</Button>
-                  <Input name='candidatesOnly' type='checkbox' onChange={this.onChange} label='Candidate Committees Only' className='filled-in' checked={this.state.candidatesOnly} />
+                  <Button className='center-button' type='submit' waves='teal'>Search</Button>
+                </form>
+              </Row>
+              <Modal style={modalStyle} trigger={<Button>Modal</Button>}>
+                <Row>
+                  <p>Waiting for FEC</p>
+                  <Preloader size='big' />
+                  <p>Will automatically close when FEC data responds</p>
                 </Row>
-              </form>
-            </Row>
-            <ReactTable
-              data={data}
-              columns={columns}
-              defaultPageSize={7}
-              style={tableStyle}
-              noDataText='Search a donor to see results'
-            />
-            <ReactTable
-              data={summaryData}
-              columns={summaryColumns}
-              defaultPageSize={1}
-              style={tableStyle}
-              noDataText='Search a donor to see results'
-              showPageSizeOptions={false}
-              showPagination={false}
-            />
-            <Button waves='teal' onClick={this.saveDonor}>Save Donor</Button>
+              </Modal>
+              <ReactTable
+                data={data}
+                columns={columns}
+                defaultPageSize={7}
+                style={tableStyle}
+                noDataText='Search a donor to see results'
+              />
+              <ReactTable
+                data={summaryData}
+                columns={summaryColumns}
+                defaultPageSize={1}
+                style={tableStyle}
+                noDataText='Search a donor to see results'
+                showPageSizeOptions={false}
+                showPagination={false}
+              />
+              <Button waves='teal' className='center-button' onClick={this.saveDonor}>Save Donor</Button>
+            </div>
           </Container>
         </div>
       </div>

@@ -8,9 +8,16 @@ a {
 }
 
 header div {
-  background-color: #1B7F4C;
+  background: #1B7F4C;
   text-align: left;
-  padding: 10px;
+  padding: 5px 10px;
+  height: 120px;
+}
+
+.logo-image {
+  background: url("images/noun_4585_cc_white.svg") no-repeat;
+  transform: translate(90vw, -100px);
+  height: 100px;
 }
 
 header nav {

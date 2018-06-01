@@ -59,9 +59,17 @@ class SavedDonors extends Component {
       Header: 'Total Donations',
       accessor: 'total_donations'
     }, {
+      Header: 'Committees',
+      accessor: 'committees'
+    }, {
       Header: 'Percent Dem',
       accessor: 'percent_dem'
     }]
+    const tableStyle = {
+      background: 'rgba(216, 216, 216, 0.8)',
+      margin: '40px 0 40px 0',
+      fontSize: '12px'
+    }
     return (
       <div>
         <div className='search-image'>
@@ -69,6 +77,7 @@ class SavedDonors extends Component {
             <ReactTable
               data={data}
               columns={columns}
+              style={tableStyle}
             />
           </Container>
         </div>
