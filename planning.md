@@ -86,3 +86,5 @@ Paletton UID: 5300u0kleqtbzEKgVuIpcmGtdhZ
 .rgba-secondary-2-4 { color: rgba( 71,129, 11,1) }
 
 ```
+
+Magnifying Glass by SimpleScott from the Noun Project
