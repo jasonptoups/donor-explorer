@@ -25,8 +25,7 @@ class App extends Component {
     this.state = {
       accessToken: null,
       refreshToken: null,
-      userId: null,
-      // isAuthenticated: true
+      userId: null
     }
     this.logIn = this.logIn.bind(this)
     this.isAuthenticated = this.isAuthenticated.bind(this)
@@ -53,16 +52,16 @@ class App extends Component {
   }
 
   logOut () {
+    sessionStorage.removeItem('accessToken')
+    sessionStorage.removeItem('refreshToken')
     this.setState({
       accessToken: null,
       refreshToken: null,
-      userId: null,
-      // isAuthenticated: false
+      userId: null
     })
   }
 
   isAuthenticated () {
-    // if (this.state.isAuthenticated === true) return true
     if (this.state.accessToken === null) return false
     if (1000 * jwtDecode(this.state.accessToken).exp - new Date().getTime() >= 0) {
       return true

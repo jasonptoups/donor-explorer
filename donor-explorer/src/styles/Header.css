@@ -18,6 +18,7 @@ header div {
   background: url("images/noun_4585_cc_white.svg") no-repeat;
   transform: translate(90vw, -100px);
   height: 100px;
+  width: 100px;
 }
 
 header nav {

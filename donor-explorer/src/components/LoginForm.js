@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-
 import {Container, Row, Input, Button} from 'react-materialize'
 
 export default class LoginForm extends Component {
@@ -30,16 +29,18 @@ export default class LoginForm extends Component {
   render () {
     return (
       <div>
-        <div className='register-image'>
+        <div className='login-background'>
           <Container>
-            <h2>Sign In</h2>
-            <Row>
+            <div className='login-container'>
+              <h2>Sign In</h2>
               <Row>
-                <Input s={12} type='email' label='Email' name='username' onChange={this.onChange} id='email' />
-                <Input s={12} type='password' label='Password' name='password' onChange={this.onChange} />
-                <Button onClick={this.submit} waves='teal'>Sign In</Button>
+                <form onSubmit={this.submit}>
+                  <Input s={12} type='email' label='Email' name='username' onChange={this.onChange} id='email' />
+                  <Input s={12} type='password' label='Password' name='password' onChange={this.onChange} />
+                  <Button onClick={this.submit} waves='teal'>Sign In</Button>
+                </form>
               </Row>
-            </Row>
+            </div>
           </Container>
         </div>
       </div>

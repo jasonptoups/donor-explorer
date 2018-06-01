@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import {Container, Row, Input, Button, Modal, Col, Preloader} from 'react-materialize'
+import {Container, Row, Input, Button} from 'react-materialize'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import _ from 'lodash'
@@ -120,7 +120,7 @@ class Search extends Component {
       mode_donation: this.state.modeDonation,
       total_donations: this.state.totalDonations,
       percent_dem: this.state.percentDem,
-      commitees: this.state.committeeList,
+      committees: this.state.committeeList,
       user: this.props.userId
     })
       .then(res => {
@@ -198,10 +198,6 @@ class Search extends Component {
       minWidth: 150
     }]
 
-    const modalStyle = {
-      padding: 0
-    }
-
     return (
       <div>
         <div className='search-image'>
@@ -215,13 +211,6 @@ class Search extends Component {
                   <Button className='center-button' type='submit' waves='teal'>Search</Button>
                 </form>
               </Row>
-              <Modal style={modalStyle} trigger={<Button>Modal</Button>}>
-                <Row>
-                  <p>Waiting for FEC</p>
-                  <Preloader size='big' />
-                  <p>Will automatically close when FEC data responds</p>
-                </Row>
-              </Modal>
               <ReactTable
                 data={data}
                 columns={columns}
@@ -238,7 +227,7 @@ class Search extends Component {
                 showPageSizeOptions={false}
                 showPagination={false}
               />
-              <Button waves='teal' className='center-button' onClick={this.saveDonor}>Save Donor</Button>
+              <Button waves='teal' disabled={!this.props.isAuthenticated()} className='center-button' onClick={this.saveDonor}>Save Donor</Button>
             </div>
           </Container>
         </div>

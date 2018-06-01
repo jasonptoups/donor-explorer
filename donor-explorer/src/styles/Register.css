@@ -1,0 +1,60 @@
+.register-container {
+  background: rgba(210, 215, 217, 0.7);
+  padding: 20px;
+  margin: 15vh 0;
+}
+
+.register-background {
+  background: linear-gradient(
+                     rgba(72,72,72, .7), 
+                     rgba(72,72,72, .7)),
+                     url("images/brandon-mowinkel-211936-unsplash-edited.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+  overflow-y: hidden;
+  height: calc(100vh - 160px);
+}
+
+.login-container {
+  background: rgba(210, 215, 217, 0.7);
+  padding: 20px;
+  margin: 15vh 0;
+}
+
+.login-background {
+  background: linear-gradient(
+                     rgba(72,72,72, .7), 
+                     rgba(72,72,72, .7)),
+                     url("images/brandon-mowinkel-211936-unsplash-edited.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 100%;
+  background-size: cover;
+  overflow-y: hidden;
+  height: calc(100vh - 160px);
+}
+
+
+.input-field label {
+  color: black;
+}
+
+.input-field underline {
+  border-bottom: 1px solid #000
+}
+
+.input-field input[type=text]:focus + label {
+  color: #1E5373;
+}
+
+.input-field input[type=text]:focus {
+  border-bottom: 1px solid #1E5373;
+  box-shadow: 0 1px 0 0 #000;
+}
+
+.input-field input[type=text] {
+  border-bottom: 1px solid #000;
+  box-shadow: 0 1px 0 0 #000;
+}

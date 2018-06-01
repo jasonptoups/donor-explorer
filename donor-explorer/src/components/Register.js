@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-
 import {Container, Row, Input, Button} from 'react-materialize'
+
 import {CLIENT_URL} from '../constants/constants'
+import '../styles/Register.css'
 
 class Register extends Component {
   constructor () {
@@ -40,19 +41,19 @@ class Register extends Component {
 
   render () {
     return (
-      <div>
+      <div className='register-background'>
         <div className='register-image'>
           <Container>
-            <h2>Register</h2>
-            <Row>
-              <form onSubmit={this.submit}>
-                <Row>
-                  <Input s={12} type='email' validate label='Email' name='username' onChange={this.onChange} id='email' />
+            <div className='register-container'>
+              <h3>Sign Up</h3>
+              <Row>
+                <form onSubmit={this.submit}>
+                  <Input s={12} type='email' validate label='Email' name='username' onChange={this.onChange} />
                   <Input s={12} type='password' label='Password' name='password' onChange={this.onChange} />
-                  <Button type='submit' waves='teal'>Register</Button>
-                </Row>
-              </form>
-            </Row>
+                  <Button className='center-button' type='submit' waves='teal'>Sign Up</Button>
+                </form>
+              </Row>
+            </div>
           </Container>
         </div>
       </div>
