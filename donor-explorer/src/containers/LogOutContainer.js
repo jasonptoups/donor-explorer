@@ -4,7 +4,7 @@ import {Redirect} from 'react-router-dom'
 const LogOutContainer = (props) => {
   props.logOut()
   return (
-    <Redirect to='/' />
+    <Redirect to='/donor-explorer/' />
   )
 }
 

@@ -1,5 +1,7 @@
 # Front end React with JWTs
 
+This section is under development. I will document my process and include it here. I hope to have something written here by Friday, June 8.
+<!-- 
 ## Set up react up
 I started by creating a directory and CDing into that directory. In the terminal, run the following commands:
 ```bash
@@ -81,4 +83,4 @@ ReactDOM.render((
     </ConnectedRouter>
   </Provider>
 ), document.getElementById('root'))
-```
+``` -->

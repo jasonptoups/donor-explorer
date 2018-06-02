@@ -9,7 +9,7 @@ import LoginForm from '../components/LoginForm'
 const LoginContainer = (props) => {
   if (props.isAuthenticated()) {
     return (
-      <Redirect to='/' />
+      <Redirect to='/donor-explorer/' />
     )
   } else {
     return (

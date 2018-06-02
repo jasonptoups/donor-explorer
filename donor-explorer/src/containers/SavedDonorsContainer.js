@@ -9,7 +9,7 @@ const SavedDonorsContainer = (props) => {
     )
   } else {
     return (
-      <Redirect to='/login' />
+      <Redirect to='/donor-explorer/login' />
     )
   }
 }

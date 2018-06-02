@@ -106,7 +106,7 @@ class App extends Component {
             <Header isAuthenticated={this.isAuthenticated} />
             <Switch>
               <Route
-                path='/'
+                path='/donor-explorer/'
                 exact
                 render={props => (
                   <HomePage
@@ -115,7 +115,7 @@ class App extends Component {
                 )}
               />
               <Route
-                path='/login'
+                path='/donor-explorer/login'
                 exact
                 render={props => (
                   <LoginContainer
@@ -129,7 +129,7 @@ class App extends Component {
                 )}
               />
               <Route
-                path='/search'
+                path='/donor-explorer/search'
                 exact
                 render={props => {
                   return (
@@ -142,14 +142,14 @@ class App extends Component {
                 }}
               />
               <Route
-                path='/register'
+                path='/donor-explorer/register'
                 exact
                 render={props => (
                   <Register {...props} isAuthenticated={this.isAuthenticated} />
                 )}
               />
               <Route
-                path='/saveddonors'
+                path='/donor-explorer/saveddonors'
                 exact
                 render={props => (
                   <SavedDonorsContainer
@@ -159,7 +159,7 @@ class App extends Component {
                 )}
               />
               <Route
-                path='/logout'
+                path='/donor-explorer/logout'
                 exact
                 render={props => (
                   <LogOutContainer
@@ -167,7 +167,7 @@ class App extends Component {
                     logOut={this.logOut} />
                 )}
               />
-              <Route path='/*' render={() => <Redirect to='/' />} />
+              <Route path='/donor-explorer/*' render={() => <Redirect to='/' />} />
             </Switch>
           </div>
         </Router>
