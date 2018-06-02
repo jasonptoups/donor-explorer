@@ -1,7 +1,7 @@
 # Donor Explorer
 ## Repos
-Front-end: 
-Back-end: 
+Front-end: [https://github.com/jasonptoups/donor-explorer](https://github.com/jasonptoups/donor-explorer)  
+Back-end: [https://github.com/jasonptoups/donor-explorer-backend](https://github.com/jasonptoups/donor-explorer-backend)  
 
 ## Assignment
 I made this for my final project at General Assembly. The assignment was to make an app in 1 week using any technologies we wish. I was able to build this app with no instructor-help, instead relying on many, many Google searches.
@@ -54,7 +54,7 @@ $ npm run start
 * React Router
 * JWTs authentication
 * Axios (npm package)
-* Lodash (npm package)
+* Lodash (npm package)  
 Note: I initially started building this app using redux, but I soon ran into problems. I taught myself how to use JWT authentication in this app, and I struggled to integrate that into my rudimentary understanding of Redux. Now that I have a deeper understanding of JWTs, I would like to go back an implement a redux store for this app. 
 
 ### Back-end
