@@ -6,8 +6,8 @@
 
 .register-background {
   background: linear-gradient(
-                     rgba(72,72,72, .7), 
-                     rgba(72,72,72, .7)),
+                     rgba(127, 132, 135, .7), 
+                     rgba(127, 132, 135, .7)),
                      url("images/brandon-mowinkel-211936-unsplash-edited.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -25,8 +25,8 @@
 
 .login-background {
   background: linear-gradient(
-                     rgba(72,72,72, .7), 
-                     rgba(72,72,72, .7)),
+                     rgba(127, 132, 135, .7), 
+                     rgba(127, 132, 135, .7)),
                      url("images/brandon-mowinkel-211936-unsplash-edited.png");
   background-repeat: no-repeat;
   background-position: center;

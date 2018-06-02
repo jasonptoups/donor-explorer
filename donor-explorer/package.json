@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "proxy": "http://localhost:8000/",
+  "homepage": "https://jasonptoups.github.io/donor-explorer",
   "dependencies": {
     "axios": "^0.18.0",
+    "gh-pages": "^1.2.0",
     "history": "^4.7.2",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.10",
@@ -28,6 +30,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   }
 }

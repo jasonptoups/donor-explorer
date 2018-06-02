@@ -227,7 +227,8 @@ class Search extends Component {
                 showPageSizeOptions={false}
                 showPagination={false}
               />
-              <Button waves='teal' disabled={!this.props.isAuthenticated()} className='center-button' onClick={this.saveDonor}>Save Donor</Button>
+              <Button waves='teal' disabled={!this.props.isAuthenticated()} className='center-button save-button' onClick={this.saveDonor}>Save Donor</Button>
+              {!this.props.isAuthenticated() && <p className='error search-error'>Must be logged in to save</p>}
             </div>
           </Container>
         </div>

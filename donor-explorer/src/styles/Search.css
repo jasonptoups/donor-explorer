@@ -1,7 +1,7 @@
 .search-image {
   background: linear-gradient(
-                     rgba(72,72,72, .7), 
-                     rgba(72,72,72, .7)),
+                     rgba(127, 132, 135, .7), 
+                     rgba(127, 132, 135, .7)),
                      url("images/jomar-271602-unsplash-edited.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -34,8 +34,20 @@
   background-color: #51AC7E
 }
 
+.save-button.disabled {
+  pointer-events: auto;
+}
+
 .center-button:hover {
   background-color: #81CAA5
+}
+
+.error {
+  color: darkred;
+}
+
+.search-error {
+  text-align: center;
 }
 
 .search-container {
