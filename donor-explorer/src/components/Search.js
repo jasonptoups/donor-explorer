@@ -4,6 +4,7 @@ import {Container, Row, Input, Button} from 'react-materialize'
 import ReactTable from 'react-table'
 import 'react-table/react-table.css'
 import _ from 'lodash'
+import SpinnerModal from './SpinnerModal'
 
 import '../styles/Search.css'
 import {API_KEY, STANDARD_SETTINGS, FEC_API} from '../constants/constants'
@@ -20,11 +21,14 @@ class Search extends Component {
       maxDonation: null,
       meanDonation: null,
       modeDonation: null,
-      percentDem: null
+      percentDem: null,
+      modalIsOpen: false
     }
     this.onChange = this.onChange.bind(this)
     this.search = this.search.bind(this)
     this.saveDonor = this.saveDonor.bind(this)
+    this.openModal = this.openModal.bind(this)
+    this.closeModal = this.closeModal.bind(this)
   }
 
   onChange (event) {
@@ -38,6 +42,7 @@ class Search extends Component {
 
   search (event) {
     event.preventDefault()
+    this.openModal()
     let get2018 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2018&api_key=${API_KEY}`)
     let get2016 = () => Axios.get(`${FEC_API}/?${STANDARD_SETTINGS}&contributor_name=${this.state.firstName}%20${this.state.lastName}&contributor_city=${this.state.city}&two_year_transaction_period=2016&api_key=${API_KEY}`)
     get2018()
@@ -59,7 +64,8 @@ class Search extends Component {
               modeDonation,
               percentDem,
               totalDonations,
-              committeeList
+              committeeList,
+              modalIsOpen: false
             })
             console.log(this.state)
           })
@@ -127,6 +133,14 @@ class Search extends Component {
         console.log(res)
       })
       .catch(error => console.log(error))
+  }
+
+  openModal () {
+    this.setState({modalIsOpen: true})
+  }
+
+  closeModal () {
+    this.setState({modalIsOpen: false})
   }
 
   render () {
@@ -230,6 +244,11 @@ class Search extends Component {
               <Button waves='teal' disabled={!this.props.isAuthenticated()} className='center-button save-button' onClick={this.saveDonor}>Save Donor</Button>
               {!this.props.isAuthenticated() && <p className='error search-error'>Must be logged in to save</p>}
             </div>
+            <SpinnerModal
+              isOpen={this.state.modalIsOpen}
+              closeModal={this.closeModal}
+              message='Please wait for FEC data'
+            />
           </Container>
         </div>
       </div>

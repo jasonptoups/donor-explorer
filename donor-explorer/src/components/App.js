@@ -25,14 +25,18 @@ class App extends Component {
     this.state = {
       accessToken: null,
       refreshToken: null,
-      userId: null
+      userId: null,
+      loginModalIsOpen: false
     }
     this.logIn = this.logIn.bind(this)
     this.isAuthenticated = this.isAuthenticated.bind(this)
     this.logOut = this.logOut.bind(this)
+    this.openLoginModal = this.openLoginModal.bind(this)
+    this.closeLoginModal = this.closeLoginModal.bind(this)
   }
 
   logIn (username, password) {
+    this.openLoginModal()
     Axios({
       method: 'post',
       url: `${CLIENT_URL}api/auth/token/obtain`,
@@ -42,6 +46,7 @@ class App extends Component {
       }
     }).then(res => {
       this.setState({
+        loginModalIsOpen: false,
         accessToken: res.data.access,
         refreshToken: res.data.refresh,
         userId: jwtDecode(res.data.access).user_id
@@ -49,6 +54,14 @@ class App extends Component {
       sessionStorage.setItem('accessToken', res.data.access)
       sessionStorage.setItem('refreshToken', res.data.refresh)
     })
+  }
+
+  openLoginModal () {
+    this.setState({loginModalIsOpen: true})
+  }
+
+  closeLoginModal () {
+    this.setState({loginModalIsOpen: false})
   }
 
   logOut () {
@@ -108,7 +121,11 @@ class App extends Component {
                   <LoginContainer
                     {...props}
                     isAuthenticated={this.isAuthenticated}
-                    logIn={this.logIn} />
+                    logIn={this.logIn}
+                    openLoginModal={this.openLoginModal}
+                    closeLoginModal={this.closeLoginModal}
+                    loginModalIsOpen={this.state.loginModalIsOpen}
+                  />
                 )}
               />
               <Route
