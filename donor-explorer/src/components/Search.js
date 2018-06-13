@@ -114,7 +114,7 @@ class Search extends Component {
   saveDonor (event) {
     event.preventDefault()
     console.log(this.props.userId)
-    Axios.post('http://donor-explorer.herokuapp.com/api/donors/saved-donors', {
+    Axios.post('https://donor-explorer.herokuapp.com/api/donors/saved-donors', {
       first_name: this.state.firstName,
       last_name: this.state.lastName,
       city: this.state.city,

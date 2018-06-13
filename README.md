@@ -4,7 +4,7 @@ Front-end: [https://github.com/jasonptoups/donor-explorer](https://github.com/ja
 Back-end: [https://github.com/jasonptoups/donor-explorer-backend](https://github.com/jasonptoups/donor-explorer-backend)  
 
 ## Assignment
-I made this for my final project at General Assembly. The assignment was to make an app in 1 week using any technologies we wish. I was able to build this app with no instructor-help, instead relying on many, many Google searches.
+I made this for my final project at General Assembly. This was a solo project. The assignment was to make an app in 1 week using any technologies we wish. I was able to build this app with no instructor-help, instead relying on many, many Google searches.
 
 ## Purpose
 Donor Explorer uses the Federal Election Commission API to make it easier to explore donors and their relationships. Users can use the Search tab to search for any donors, provided they give a first name, last name, and city location. The resulting table will fill in with donors that match.  
@@ -63,16 +63,23 @@ Note: I initially started building this app using redux, but I soon ran into pro
 * Django
 * Django REST Framework
 * Django REST Framework Simple JWTs
+* Heroku deployment
 
 ### Deployment
 The deployed front-end is on github pages while the backend is on Heroku. I am using the free sandbox version of Heroku, so the server sleeps in between frequent use. If you are accessing the deployed version for the first time in a while, please allow a longer wait time after your first API call. 
+
+### Specific Learnings
+I taught myself JWTs authentication to make this project. I initially followed a few different tutorials, but I eventually found that none of them exactly matched my purpose. In the current version of the codebase, there is almost no code left from those tutorials, as I have fully customized almost everything. However, they were very helpful in teaching me what I know. Below is a list of tutorials I referenced during this:  
+* [Full stack Django: Quick start with JWT auth and React/Redux (Part I-III)](https://medium.com/netscape/full-stack-django-quick-start-with-jwt-auth-and-react-redux-part-i-37853685ab57)
+* [Token-based authentication with Django and React](http://geezhawk.github.io/user-authentication-with-react-and-django-rest-framework)  
+
+This was also the first project in which I used Materialize, a CSS library. I like Materialize and I think it's quite attractive; however, it uses JQuery for most of its implementation, which does not always play nicely with React. Thank you to the folks at [React Materialize](https://react-materialize.github.io/#/) for building a bunch of useful Components that do the best approximation of Materialize in React. 
 
 ## Future improvements
 There is a lot more that can be improved! The current version is the product of 1 week of work, and I would like to put in more time to really improve it. Some additional features and updates I would like to make:  
 * Allow logged in users to delete their saved donors
 * Find a way to wrap text in the react-table I am using
 * Allow for .csv download from the Saved Donor table
-* Require authentication to access more of the backend API routes
 
 ## Acknowledgements
 Thank you to my instructors and classmates at General Assembly for pushing and inspiring me every day.  
